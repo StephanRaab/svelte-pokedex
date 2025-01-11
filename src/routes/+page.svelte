@@ -1,21 +1,15 @@
 
 <script lang="ts">
- import {hello} from './generationsations'    
-
- const greetingObject = {
-    greeting: 'hello',
-    name: 'bob'
- };
-
- const data = [
-    "red","blue", "yellow"
-]
+ import {generations} from './generations'    
 </script>
 
-<h1>{greetingObject.greeting} {greetingObject.name}</h1>
-
-{#each data as color, i (i+color)}
+{#each generations as gen}
+    <h1>{gen.name}</h1>
+    <p>Games:</p>
     <ul>
-        <li>{i}: {color}</li>
+        {#each gen.games as game}
+           <li>{game}</li>
+        {/each}
     </ul>
+    <p>Main Region: {gen.main_region}</p>
 {/each}
