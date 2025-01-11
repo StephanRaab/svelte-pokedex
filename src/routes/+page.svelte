@@ -1,6 +1,6 @@
 
 <script lang="ts">
- import {hello} from './hello'    
+ import {hello} from './generationsations'    
 
  const greetingObject = {
     greeting: 'hello',
