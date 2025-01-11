@@ -14,7 +14,7 @@
 
 <h1>{greetingObject.greeting} {greetingObject.name}</h1>
 
-{#each data as color, i}
+{#each data as color, i (i+color)}
     <ul>
         <li>{i}: {color}</li>
     </ul>
