@@ -3,8 +3,8 @@
  import {generations} from './generations'    
 </script>
 
-{#each generations as gen}
-    <h1>{gen.name}</h1>
+{#each generations as gen (gen.id)}
+    <h2>{gen.name}</h2>
     <p>Games:</p>
     <ul>
         {#each gen.games as game}
