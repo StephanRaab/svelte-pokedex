@@ -4,22 +4,27 @@
     import { page } from '$app/stores';
     import type { IndexMonster } from './+page';
     import { generations } from "./generations";
-  import { goto } from '$app/navigation';
+    import { goto } from '$app/navigation';
 
     export let data: PageData;
 
-    let monsterId:string = $page.url.searchParams.get("monsterId") || '';
-    $:monster = data.monsters.find(monster => monster.id === monsterId);
-    const monsterClick = (monster:IndexMonster) => {
-        monsterId = monster.id;
-        goto(`?monsterId=${monsterId}`);
+    $: monsterId = $page.url.searchParams.get("monsterId") || '';
+    $: monster = data.monsters.find(monster => monster.id === monsterId);
+    $: monsterId2 = $page.url.searchParams.get("monsterId2") || '';
+    $: monster2 = data.monsters.find(monster => monster.id === monsterId2);
+
+    const updateSearchParams = (key:string, value:string) =>{
+        const searchParams = new URLSearchParams($page.url.searchParams);
+        searchParams.set(key, value);
+        goto(`?${searchParams.toString()}`);
     }
 </script>
 
 <!-- TEMPLATE -->
 <h1>{monsterId}</h1>
 <h2>{monster?.name}</h2>
-
+<h1>{monsterId2}</h1>
+<h2>{monster2?.name}</h2>
 <div class="generations">
     {#each generations as generation (generation.id)}
     <div class="generation">{generation.main_region}</div>    
@@ -30,15 +35,21 @@
 <div class="monsters">
     {#each data.monsters as monster(monster.id)}
         
-        <div class="monster" on:click={() => monsterClick(monster)}>
+    <div class="monster">
+        <div on:click={() => updateSearchParams('monsterId', monster.id)}>
             <div class="monster-id">
                 {monster.id}
-            </div>
-            <div class="monster-content">
-                <img src="{monster.image}" alt="{monster.name} image">
-                 <h3>{monster.name}</h3>
-            </div>            
+              </div>
+          <div class="monster-content">
+            <img src={monster.image} alt={monster.name} />
+            <h3>{monster.name}</h3>
+          </div>
+
         </div>
+        <div on:click={() => updateSearchParams('monsterId2', monster.id)}>
+          Add Monster 2
+        </div>
+      </div>
     {/each}
 </div>
 
