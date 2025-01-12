@@ -4,8 +4,17 @@
  import { generations } from "./generations";
 
  export let data: PageData;
+ let count = 0;
+ $:doubleCount = count *2; //computed property
+ const monsterClick = (monster) => {
+    // alert(`Hello from ${monster.name}`);
+    monster.id % 2 == 0 ? count++ : count--;    
+ }
 </script>
 
+
+<h1>{count}</h1>
+<h2>{doubleCount}</h2>
 <div class="generations">
     {#each generations as generation (generation.id)}
     <div class="generation">{generation.main_region}</div>    
@@ -16,7 +25,7 @@
 <div class="monsters">
     {#each data.monsters as monster(monster.id)}
         
-        <div class="monster">
+        <div class="monster" on:click={() => monsterClick(monster)}>
             <div class="monster-id">
                 {monster.id}
             </div>
