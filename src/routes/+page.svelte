@@ -1,21 +1,25 @@
 
 <script lang="ts">
     import type {PageData} from './$types'; 
-  import type { IndexMonster } from './+page';
+    import { page } from '$app/stores';
+    import type { IndexMonster } from './+page';
     import { generations } from "./generations";
+  import { goto } from '$app/navigation';
 
     export let data: PageData;
 
-    let monsterId:string;
+    let monsterId:string = $page.url.searchParams.get("monsterId") || '';
     $:monster = data.monsters.find(monster => monster.id === monsterId);
     const monsterClick = (monster:IndexMonster) => {
         monsterId = monster.id;
+        goto(`?monsterId=${monsterId}`);
     }
 </script>
 
 <!-- TEMPLATE -->
 <h1>{monsterId}</h1>
 <h2>{monster?.name}</h2>
+
 <div class="generations">
     {#each generations as generation (generation.id)}
     <div class="generation">{generation.main_region}</div>    
