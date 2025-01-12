@@ -1,9 +1,15 @@
 import type { PageLoad } from "./$types";
 
-type IndexMonster = {
+type ApiMonster = {
   name: string;
   url: string;
   id: number;
+};
+
+export type IndexMonster = ApiMonster & {
+  //the & here is extending the ApiMonster
+  id: string;
+  image: string;
 };
 
 export const load = (async ({ fetch }) => {
@@ -11,7 +17,7 @@ export const load = (async ({ fetch }) => {
 
   const res = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
   const json = await res.json();
-  const monsters = json.results.map((monster: IndexMonster) => {
+  const monsters: IndexMonster[] = json.results.map((monster: ApiMonster) => {
     const splitUrl = monster.url.split("/");
     const id = splitUrl[splitUrl.length - 2];
 

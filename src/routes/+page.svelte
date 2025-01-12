@@ -1,20 +1,21 @@
 
 <script lang="ts">
- import type {PageData} from './$types'; 
- import { generations } from "./generations";
+    import type {PageData} from './$types'; 
+  import type { IndexMonster } from './+page';
+    import { generations } from "./generations";
 
- export let data: PageData;
- let count = 0;
- $:doubleCount = count *2; //computed property
- const monsterClick = (monster) => {
-    // alert(`Hello from ${monster.name}`);
-    monster.id % 2 == 0 ? count++ : count--;    
- }
+    export let data: PageData;
+
+    let monsterId:string;
+    $:monster = data.monsters.find(monster => monster.id === monsterId);
+    const monsterClick = (monster:IndexMonster) => {
+        monsterId = monster.id;
+    }
 </script>
 
-
-<h1>{count}</h1>
-<h2>{doubleCount}</h2>
+<!-- TEMPLATE -->
+<h1>{monsterId}</h1>
+<h2>{monster?.name}</h2>
 <div class="generations">
     {#each generations as generation (generation.id)}
     <div class="generation">{generation.main_region}</div>    
@@ -37,7 +38,7 @@
     {/each}
 </div>
 
-
+<!-- STYLING -->
 <style>
     * {
         margin: 0;
