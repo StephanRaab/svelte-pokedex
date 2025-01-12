@@ -1,9 +1,17 @@
 
 <script lang="ts">
  import type {PageData} from './$types'; 
+ import { generations } from "./generations";
 
  export let data: PageData;
 </script>
+
+<div class="generations">
+    {#each generations as generation (generation.id)}
+    <div class="generation">{generation.main_region}</div>    
+{/each}
+</div>
+
 
 <div class="monsters">
     {#each data.monsters as monster(monster.id)}
@@ -29,11 +37,38 @@
         font-family: monospace;        
     }
     
+    .generations{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .generation {
+        color: #333;
+        margin: 1rem;
+        padding: .5em;
+        border: 1px solid rgb(223, 203, 161);
+        border-radius: 20px;
+        background-color: rgb(255, 238, 202);
+        transition: all .3s ease-in-out;
+        cursor: pointer;
+    }
+
+    .generation:hover {
+        transition: all .3s ease-in-out;
+        transform: translateY(-5px);
+        background-color: rgb(238, 208, 175);
+        border-color: rgb(204, 154, 97);
+        font-weight: 700;
+    }
+
     .monsters {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         gap: 1rem;
+        justify-content: center;
     }
     .monster {
         width: 120px;        
