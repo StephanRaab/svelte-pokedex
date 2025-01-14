@@ -2,10 +2,9 @@
 <script lang="ts">
     import type {PageData} from './$types'; 
     import { page } from '$app/stores';
-    import type { IndexMonster } from './+page';
     import { generations } from "./generations";
+    import Monster from './Monster.svelte';
     import { goto } from '$app/navigation';
-  import Monster from './Monster.svelte';
 
     export let data: PageData;
 
@@ -22,12 +21,14 @@
 </script>
 
 <!-- TEMPLATE -->
-<Monster/>
+{#if monster}
+    <Monster monster={monster} updateSearchParams={updateSearchParams}/>    
+{/if}
 
-<h1>{monsterId}</h1>
-<h2>{monster?.name}</h2>
-<h1>{monsterId2}</h1>
-<h2>{monster2?.name}</h2>
+{#if monster2}
+    <Monster monster={monster2} updateSearchParams={updateSearchParams}/>    
+{/if}
+
 <div class="generations">
     {#each generations as generation (generation.id)}
     <div class="generation">{generation.main_region}</div>    
@@ -37,22 +38,7 @@
 
 <div class="monsters">
     {#each data.monsters as monster(monster.id)}
-        
-    <div class="monster">
-        <div on:click={() => updateSearchParams('monsterId', monster.id)}>
-            <div class="monster-id">
-                {monster.id}
-              </div>
-          <div class="monster-content">
-            <img src={monster.image} alt={monster.name} />
-            <h3>{monster.name}</h3>
-          </div>
-
-        </div>
-        <div on:click={() => updateSearchParams('monsterId2', monster.id)}>
-          Add Monster 2
-        </div>
-      </div>
+        <Monster monster={monster} updateSearchParams={updateSearchParams}/>    
     {/each}
 </div>
 
@@ -94,8 +80,7 @@
     .monsters {
         display: flex;
         flex-direction: row;
-        flex-wrap: wrap;
-        gap: 1rem;
+        flex-wrap: wrap;        
         justify-content: center;
     }
     .monster {
