@@ -4,12 +4,13 @@
     // these are props
     export let monster:IndexMonster;
     export let updateSearchParams: (key: string, value:string) => void;
+    export let isInteractive: boolean = false;
 </script>
 
 <!-- TEMPLATE -->
  <div class="monsters">
     <div class="monster">
-        <div on:click={() => updateSearchParams('monsterId', monster.id)}>
+        <div on:click={() => isInteractive ? updateSearchParams('monsterId', monster.id): ()=>{}}>
             <div class="monster-id">
                 {monster.id}
               </div>
@@ -19,9 +20,11 @@
           </div>
     
         </div>
-        <div on:click={() => updateSearchParams('monsterId2', monster.id)}>
-          Add Monster 2
-        </div>
+        {#if isInteractive}
+            <div on:click={() => updateSearchParams('monsterId2', monster.id)}>
+                Add Monster 2
+            </div>    
+        {/if}        
       </div>
  </div>
  

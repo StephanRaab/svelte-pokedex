@@ -38,7 +38,11 @@
 
 <div class="monsters">
     {#each data.monsters as monster(monster.id)}
-        <Monster monster={monster} updateSearchParams={updateSearchParams}/>    
+        <Monster 
+        monster={monster} 
+        updateSearchParams={updateSearchParams}
+        isInteractive={true}
+        />    
     {/each}
 </div>
 
