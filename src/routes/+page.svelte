@@ -5,6 +5,7 @@
     import type { IndexMonster } from './+page';
     import { generations } from "./generations";
     import { goto } from '$app/navigation';
+  import Monster from './Monster.svelte';
 
     export let data: PageData;
 
@@ -21,6 +22,8 @@
 </script>
 
 <!-- TEMPLATE -->
+<Monster/>
+
 <h1>{monsterId}</h1>
 <h2>{monster?.name}</h2>
 <h1>{monsterId2}</h1>
