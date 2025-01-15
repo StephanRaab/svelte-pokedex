@@ -8,6 +8,9 @@
 
     export let data: PageData;
 
+    let form = {
+        searchString: ''
+    }
     let searchString = '';
     $: selectedMonsters = data.monsters.filter((monster)=>{
         return monster.name.toLocaleLowerCase().includes(searchString.toLowerCase());
@@ -22,6 +25,11 @@
         const searchParams = new URLSearchParams($page.url.searchParams);
         searchParams.set(key, value);
         goto(`?${searchParams.toString()}`);
+    }
+
+    const submitSearch = (e:Event) => {
+        searchString = form.searchString;
+
     }
 </script>
 
@@ -40,8 +48,10 @@
 {/each}
 </div>
 
-<input type="text" bind:value={searchString}>
-<button>Search</button>
+<form class="search" on:submit={submitSearch}>
+    <input class="search-field" type="text" bind:value={form.searchString} placeholder="pokemon name">
+    <input class="search-button" value="Search" type="submit"/>    
+</form>
 
 <div class="monsters">
     {#each selectedMonsters as monster(monster.id)}
@@ -86,6 +96,21 @@
         background-color: rgb(238, 208, 175);
         border-color: rgb(204, 154, 97);
         font-weight: 700;
+    }
+
+    .search{
+        display: flex;
+        justify-content: center;
+        gap: .4rem;
+        margin: 20px 0;
+
+        .search-field {
+            padding: 5px 10px;
+        }
+
+        .search-button {
+            padding: 10px;
+        }
     }
 
     .monsters {
