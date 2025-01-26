@@ -44,8 +44,8 @@
 
 <div class="generations">
     {#each generations as generation (generation.id)}
-    <div class="generation">{generation.main_region}</div>    
-{/each}
+        <div class="generation">{generation.main_region}</div>    
+    {/each}
 </div>
 
 <form class="search" on:submit={submitSearch}>
